@@ -1,7 +1,7 @@
 package com.dev.web.controller;
 
 
-import com.dev.common.object.ResponseData;
+import com.frame.common.object.ResponseData;
 import com.dev.web.entity.User;
 import com.dev.web.service.IUserService;
 import io.swagger.annotations.Api;

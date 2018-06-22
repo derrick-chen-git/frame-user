@@ -1,7 +1,7 @@
 package com.dev.web.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.dev.common.utils.RedisUtils;
+import com.frame.common.utils.RedisUtils;
 import com.dev.web.entity.User;
 import com.dev.web.mapper.UserMapper;
 import com.dev.web.service.IUserService;

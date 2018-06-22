@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>dev-api</module>
+        <module>dev-web</module>
         <module>dev-api</module>
     </modules>
 
