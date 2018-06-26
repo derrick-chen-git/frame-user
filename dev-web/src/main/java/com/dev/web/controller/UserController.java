@@ -1,9 +1,9 @@
 package com.dev.web.controller;
 
 
-import com.frame.common.object.ResponseData;
 import com.dev.web.entity.User;
 import com.dev.web.service.IUserService;
+import com.frame.common.object.ResponseData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

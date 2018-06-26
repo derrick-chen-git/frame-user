@@ -39,6 +39,7 @@ spring:
         password: guest
     profiles:
         active: dev
+
 mybatis-plus:
     # ?????src/main/java??? classpath:/com/yourpackage/*/mapper/*Mapper.xml
     # ?????resource?? classpath:/mapper/*Mapper.xml
@@ -80,10 +81,18 @@ pagehelper:
     reasonable: true
     supportMethodsArguments: true
     params: count=countSql
+
+
+---
+spring:
+  profiles: dev
 logging:
   config: classpath:logConfig/logback-dev.xml
-
-
+---
+spring:
+  profiles: prd
+logging:
+  config: classpath:logConfig/logback-prd.xml
 
 
 

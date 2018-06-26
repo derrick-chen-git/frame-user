@@ -12,6 +12,4 @@
         <module>dev-web</module>
         <module>dev-api</module>
     </modules>
-
-
 </project>

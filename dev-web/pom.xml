@@ -7,13 +7,13 @@
 	<artifactId>dev-web</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-
 	<name>dev-web</name>
 	<description>dev-web</description>
+
 	<parent>
 		<groupId>com.frame.parent</groupId>
 		<artifactId>frame-parent</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 		<relativePath>../../frame-parent/pom.xml</relativePath>
 	</parent>
 	<dependencies>
@@ -38,7 +38,16 @@
 		<dependency>
 			<groupId>com.frame.commom</groupId>
 			<artifactId>frame-common</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>

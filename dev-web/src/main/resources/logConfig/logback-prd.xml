@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 分级别异步文件日志输出配置 -->
 <configuration>
+    <!--服务名称-->
+    <property name="projectName" value="dev-web"></property>
     <!-- 日志级别 -->
     <property name="logLevel" value="INFO"></property>
     <!-- 日志地址 -->
-    <property name="logPath" value="/usr/service/springboot-demo-log"></property>
+    <property name="logPath" value="/usr/service/log/dev-web"></property>
     <!-- 最大保存时间 -->
     <property name="maxHistory" value="30"/>
     <!-- 异步缓冲队列的深度,该值会影响性能.默认值为256 -->
@@ -23,9 +25,9 @@
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
-        <file>${logPath}/demo_debug.log</file>
+        <file>${logPath}/${projectName}_debug.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${logPath}/demo_debug.log.%d{yyyy-MM-dd}.zip
+            <fileNamePattern>${logPath}/${projectName}.log.%d{yyyy-MM-dd}.zip
             </fileNamePattern>
             <maxHistory>${maxHistory}</maxHistory>
         </rollingPolicy>
@@ -40,9 +42,9 @@
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
-        <file>${logPath}/demo_info.log</file>
+        <file>${logPath}/${projectName}_info.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${logPath}/demo_info.log.%d{yyyy-MM-dd}.zip
+            <fileNamePattern>${logPath}/${projectName}_info.log.%d{yyyy-MM-dd}.zip
             </fileNamePattern>
             <maxHistory>${maxHistory}</maxHistory>
         </rollingPolicy>
@@ -58,9 +60,9 @@
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
-        <file>${logPath}/demo_warn.log</file>
+        <file>${logPath}/${projectName}_warn.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${logPath}/demo_warn.log.%d{yyyy-MM-dd}.zip
+            <fileNamePattern>${logPath}/${projectName}_warn.log.%d{yyyy-MM-dd}.zip
             </fileNamePattern>
             <maxHistory>${maxHistory}</maxHistory>
         </rollingPolicy>
@@ -75,9 +77,9 @@
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
-        <file>${logPath}/demo_error.log</file>
+        <file>${logPath}/${projectName}_error.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${logPath}/demo_error.log.%d{yyyy-MM-dd}.zip
+            <fileNamePattern>${logPath}/${projectName}_error.log.%d{yyyy-MM-dd}.zip
             </fileNamePattern>
             <maxHistory>${maxHistory}</maxHistory>
         </rollingPolicy>

@@ -1,11 +1,11 @@
 package com.dev.web.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.frame.common.utils.RedisUtils;
 import com.dev.web.entity.User;
 import com.dev.web.mapper.UserMapper;
 import com.dev.web.service.IUserService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.frame.common.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
