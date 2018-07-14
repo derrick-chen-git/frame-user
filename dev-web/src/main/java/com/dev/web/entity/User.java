@@ -1,6 +1,10 @@
 package com.dev.web.entity;
 
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+import org.springframework.data.annotation.Id;
+
 import java.io.Serializable;
 
 /**
@@ -15,18 +19,18 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    private Long userId;
+    @TableId
+    private long userId;
     private String userName;
     private String password;
     private String phone;
 
 
-    public Long getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

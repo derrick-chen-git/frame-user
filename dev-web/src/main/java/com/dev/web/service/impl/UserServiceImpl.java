@@ -1,6 +1,7 @@
 package com.dev.web.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.dev.web.entity.User;
 import com.dev.web.mapper.UserMapper;
 import com.dev.web.service.IUserService;
@@ -38,9 +39,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             if (redisUtils.exists(redisKey)) {
                 return (User) redisUtils.get(redisKey);
             } else {
-                User userParam =new User();
-                userParam.setUserId(userId);
-                User user = userMapper.selectOne(userParam);
+                User user = userMapper.selectById(userId);
                 if (!Objects.isNull(user)) {
                     //设置过期时间10分钟
                     redisUtils.set(redisKey, user, TimeUnit.MINUTES.toSeconds(10));
@@ -56,6 +55,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public List<User> getAllUsers() {
         log.info("UserServiceImpl getAllUsers method start");
-        return userMapper.selectList(new EntityWrapper<>());
+       EntityWrapper<User> entityWrapper = new EntityWrapper<>();
+       String sql =  entityWrapper.getSqlSegment();
+        return userMapper.selectList(entityWrapper);
     }
 }
