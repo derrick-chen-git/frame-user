@@ -2,6 +2,8 @@ server:
   port: 8080
 
 spring:
+    application:
+      name: dev-web
     datasource:
         name: demo
         url: jdbc:mysql://47.106.212.169:3306/demo
@@ -39,7 +41,22 @@ spring:
         password: guest
     profiles:
         active: dev
-
+eureka:
+  client:
+        service-url:
+            defaultZone:  http://47.106.212.169:8761/eureka/
+        enabled: true
+            #���ڸ�Ӧ��Ϊע������,��������Ϊfalse,������ע������ע���Լ�
+        registerWithEureka: true
+                   #����ע�����ĵ�ְ�����ά������ʵ��,��������Ҫȥ��������,����Ҳ����Ϊfalse
+        fetchRegistry: true
+  instance:
+        lease-renewal-interval-in-seconds: 5      # ����ʱ�䣬��������Լ���ʱ�䣨ȱʡΪ30s��
+        lease-expiration-duration-in-seconds: 15  # ����ʱ�䣬��������Լ����ʱ�䣨ȱʡΪ90s��
+        instance-id: ${spring.application.name}
+        prefer-ip-address: true
+  healthcheck:
+        enabled: true # ����������飨����spring-boot-starter-actuator��
 mybatis-plus:
     # ?????src/main/java??? classpath:/com/yourpackage/*/mapper/*Mapper.xml
     # ?????resource?? classpath:/mapper/*Mapper.xml
