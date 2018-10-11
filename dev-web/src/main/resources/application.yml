@@ -5,26 +5,57 @@ spring:
     application:
       name: dev-web
     datasource:
-        name: demo
-        url: jdbc:mysql://47.106.212.169:3306/demo
+      master:
+        url: jdbc:mysql://47.106.212.169:3307/test?useUnicode=true&amp;characterEncoding=utf8&amp;emptyStringsConvertToZero=true
         username: root
         password: root
-        # ??druid???
+        driver_class_namel: com.mysql.jdbc.Driver
         type: com.alibaba.druid.pool.DruidDataSource
-        driver-class-name: com.mysql.jdbc.Driver
-        filters: stat
-        maxActive: 20
-        initialSize: 1
-        maxWait: 60000
-        minIdle: 1
-        timeBetweenEvictionRunsMillis: 60000
-        minEvictableIdleTimeMillis: 300000
-        validationQuery: select 'x'
-        testWhileIdle: true
-        testOnBorrow: false
-        testOnReturn: false
+
+        max-active: 20
+        initial-size: 1
+        min-idle: 3
+        max-wait: 600
+        time-between-eviction-runs-millis: 60000
+        min-evictable-idle-time-millis: 300000
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
         poolPreparedStatements: true
-        maxOpenPreparedStatements: 20
+      slave1:
+        url: jdbc:mysql://47.106.212.169:3308/test?useUnicode=true&amp;characterEncoding=utf8&amp;emptyStringsConvertToZero=true
+        username: onlyselect
+        password: 123456
+        driver_class_namel: com.mysql.jdbc.Driver
+        type: com.alibaba.druid.pool.DruidDataSource
+
+        max-active: 20
+        initial-size: 1
+        min-idle: 3
+        max-wait: 600
+        time-between-eviction-runs-millis: 60000
+        min-evictable-idle-time-millis: 300000
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+        poolPreparedStatements: true
+      slave2:
+        url: jdbc:mysql://47.106.212.169:3309/test?useUnicode=true&amp;characterEncoding=utf8&amp;emptyStringsConvertToZero=true
+        username: onlyselect
+        password: 123456
+        driver_class_namel: com.mysql.jdbc.Driver
+        type: com.alibaba.druid.pool.DruidDataSource
+
+        max-active: 20
+        initial-size: 1
+        min-idle: 3
+        max-wait: 600
+        time-between-eviction-runs-millis: 60000
+        min-evictable-idle-time-millis: 300000
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+        poolPreparedStatements: true
     redis:
         host: 47.106.212.169
         password: root
@@ -58,6 +89,7 @@ eureka:
   healthcheck:
         enabled: true # ����������飨����spring-boot-starter-actuator��
 mybatis-plus:
+    mapperLocation : classpath:/com/boot/demo/mapper/*Mapper.xml
     # ?????src/main/java??? classpath:/com/yourpackage/*/mapper/*Mapper.xml
     # ?????resource?? classpath:/mapper/*Mapper.xml
       #mapper-locations: classpath:mapping/*.xml
