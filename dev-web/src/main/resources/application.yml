@@ -56,75 +56,66 @@ spring:
         test-on-borrow: false
         test-on-return: false
         poolPreparedStatements: true
+
     redis:
-        host: 47.106.212.169
-        password: root
-        port: 6379
+        cluster:
+          max-redirects: 6
+          nodes:
+            47.106.212.169:9001,
+            47.106.212.169:9002,
+            47.106.212.169:9003,
+            47.106.212.169:9004,
+            47.106.212.169:9005,
+            47.106.212.169:9006
         pool:
           max-idle: 100
           min-idle: 1
           max-active: 1000
           max-wait: -1
+
     rabbitmq:
         host: 47.106.212.169
         port: 5672
         username: guest
         password: guest
+
+
     profiles:
         active: dev
+
+
 eureka:
   client:
         service-url:
             defaultZone:  http://47.106.212.169:8761/eureka/
         enabled: true
-            #���ڸ�Ӧ��Ϊע������,��������Ϊfalse,������ע������ע���Լ�
         registerWithEureka: true
-                   #����ע�����ĵ�ְ�����ά������ʵ��,��������Ҫȥ��������,����Ҳ����Ϊfalse
         fetchRegistry: true
   instance:
-        lease-renewal-interval-in-seconds: 5      # ����ʱ�䣬��������Լ���ʱ�䣨ȱʡΪ30s��
-        lease-expiration-duration-in-seconds: 15  # ����ʱ�䣬��������Լ����ʱ�䣨ȱʡΪ90s��
+        lease-renewal-interval-in-seconds: 5
+        lease-expiration-duration-in-seconds: 15
         instance-id: ${spring.application.name}
         prefer-ip-address: true
   healthcheck:
-        enabled: true # ����������飨����spring-boot-starter-actuator��
+        enabled: true
+
+
 mybatis-plus:
-    mapperLocation : classpath:/com/boot/demo/mapper/*Mapper.xml
-    # ?????src/main/java??? classpath:/com/yourpackage/*/mapper/*Mapper.xml
-    # ?????resource?? classpath:/mapper/*Mapper.xml
-      #mapper-locations: classpath:mapping/*.xml
-      mapper-locations: classpath:/com/boot/demo/mapper/*Mapper.xml
-       #???????package?????????
+      mapper-locations: classpath:mapper/*.xml
       type-aliases-package: com.boot.demo.entity
       global-config:
-      #????  0:"???ID??", 1:"????ID",2:"????ID (??????ID)", 3:"????ID UUID";
         id-type: 2
-      #???? 0:"????",1:"? NULL ??"),2:"????"
         field-strategy: 2
-      #???????
         db-column-underline: true
-      #mp2.3+ ????? mp_
-      #table-prefix: mp_
-      #??mapper ????
-      #refresh-mapper: true
-      #??????????
-      #capital-mode: true
-      # Sequence?????????
         key-generator: com.baomidou.mybatisplus.incrementer.OracleKeyGenerator
-      #?????????3????
         logic-delete-value: 1
         logic-not-delete-value: 0
         sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
-      #???????????
-        #meta-object-handler: com.baomidou.spring.boot.MyMetaObjectHandler
       configuration:
-      #???????(column?????&&??java???????)???????as???????SQL???as? select user_id as userId?
         map-underscore-to-camel-case: true
         cache-enabled: false
-      #??JdbcTypeForNull, oracle???????
         jdbc-type-for-null: 'null'
 
-#pagehelper????
 pagehelper:
     helperDialect: mysql
     reasonable: true
