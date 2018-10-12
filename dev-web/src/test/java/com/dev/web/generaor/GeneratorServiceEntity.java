@@ -32,7 +32,7 @@ public class GeneratorServiceEntity {
 
     private void generateByTables(boolean serviceNameStartWithI, String packageName, String... tableNames) {
         GlobalConfig config = new GlobalConfig();
-        String dbUrl = "jdbc:mysql://47.106.212.169:3306/demo";
+        String dbUrl = "jdbc:mysql://47.106.212.169:3307/test";
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         dataSourceConfig.setDbType(DbType.MYSQL)
                 .setUrl(dbUrl)
@@ -49,7 +49,7 @@ public class GeneratorServiceEntity {
                 .setInclude(tableNames);//修改替换成你需要的表名，多个表名传数组
         config.setActiveRecord(false)
                 .setAuthor("derrick")
-                .setOutputDir("F:\\privatecode\\dev-frame\\dev-frame\\dev-web\\src\\main\\java")
+                .setOutputDir("E:\\privateCode\\frame\\dev-frame\\dev-web\\src\\main\\java")
                 .setFileOverride(true);
         if (!serviceNameStartWithI) {
             config.setServiceName("%sService");

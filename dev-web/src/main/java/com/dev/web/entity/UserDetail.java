@@ -1,6 +1,6 @@
 package com.dev.web.entity;
 
-import com.baomidou.mybatisplus.annotations.TableId;
+import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
 
@@ -10,18 +10,23 @@ import java.io.Serializable;
  * </p>
  *
  * @author derrick
- * @since 2018-06-22
+ * @since 2018-10-12
  */
 @TableName("t_user_detail")
 public class UserDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @TableId
+
     private Long id;
+    private Long userId;
+    private String name;
+    private Integer age;
     private String address;
-    private String realName;
-    private String idCardNo;
-    private Integer userId;
+    private Integer sex;
+    private String remark;
+    private Integer isDelete;
+    private Date createTime;
+    private Date updateTime;
 
 
     public Long getId() {
@@ -32,6 +37,30 @@ public class UserDetail implements Serializable {
         this.id = id;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -40,38 +69,59 @@ public class UserDetail implements Serializable {
         this.address = address;
     }
 
-    public String getRealName() {
-        return realName;
+    public Integer getSex() {
+        return sex;
     }
 
-    public void setRealName(String realName) {
-        this.realName = realName;
+    public void setSex(Integer sex) {
+        this.sex = sex;
     }
 
-    public String getIdCardNo() {
-        return idCardNo;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setIdCardNo(String idCardNo) {
-        this.idCardNo = idCardNo;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getIsDelete() {
+        return isDelete;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Override
     public String toString() {
         return "UserDetail{" +
         "id=" + id +
-        ", address=" + address +
-        ", realName=" + realName +
-        ", idCardNo=" + idCardNo +
         ", userId=" + userId +
+        ", name=" + name +
+        ", age=" + age +
+        ", address=" + address +
+        ", sex=" + sex +
+        ", remark=" + remark +
+        ", isDelete=" + isDelete +
+        ", createTime=" + createTime +
+        ", updateTime=" + updateTime +
         "}";
     }
 }

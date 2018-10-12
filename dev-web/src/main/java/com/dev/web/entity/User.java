@@ -1,10 +1,7 @@
 package com.dev.web.entity;
 
-import com.baomidou.mybatisplus.annotations.TableId;
+import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.enums.IdType;
-import org.springframework.data.annotation.Id;
-
 import java.io.Serializable;
 
 /**
@@ -13,33 +10,35 @@ import java.io.Serializable;
  * </p>
  *
  * @author derrick
- * @since 2018-06-22
+ * @since 2018-10-12
  */
 @TableName("t_user")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @TableId
-    private long userId;
-    private String userName;
+
+    private Long id;
+    private String name;
     private String password;
-    private String phone;
+    private Date createTime;
+    private Integer isDelete;
+    private Date updateTime;
 
 
-    public long getUserId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
@@ -50,21 +49,39 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getPhone() {
-        return phone;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Override
     public String toString() {
         return "User{" +
-        "userId=" + userId +
-        ", userName=" + userName +
+        "id=" + id +
+        ", name=" + name +
         ", password=" + password +
-        ", phone=" + phone +
+        ", createTime=" + createTime +
+        ", isDelete=" + isDelete +
+        ", updateTime=" + updateTime +
         "}";
     }
 }
