@@ -1,6 +1,8 @@
 package com.dev.web.entity;
 
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
 
@@ -21,6 +23,7 @@ public class User implements Serializable {
     private String name;
     private String password;
     private Date createTime;
+    @TableLogic
     private Integer isDelete;
     private Date updateTime;
 

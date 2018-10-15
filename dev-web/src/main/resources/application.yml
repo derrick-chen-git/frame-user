@@ -4,6 +4,10 @@ server:
 spring:
     application:
       name: dev-web
+    #环境dev，pro 用于配置获取
+    profiles:
+      active: dev
+    #数据源，一主两从，读写分离
     datasource:
       master:
         jdbc-url: jdbc:mysql://47.106.212.169:3307/test?useUnicode=true&amp;characterEncoding=utf8&amp;emptyStringsConvertToZero=true
@@ -57,32 +61,29 @@ spring:
         test-on-return: false
         poolPreparedStatements: true
 
-    redis:
-        cluster:
-          max-redirects: 6
-          nodes:
-            47.106.212.169:9001,
-            47.106.212.169:9002,
-            47.106.212.169:9003,
-            47.106.212.169:9004,
-            47.106.212.169:9005,
-            47.106.212.169:9006
+    redis.:
+      cluster:
+        max-redirects: 6
+        nodes:
+          47.106.212.169:9001,
+          47.106.212.169:9002,
+          47.106.212.169:9003,
+          47.106.212.169:9004,
+          47.106.212.169:9005,
+          47.106.212.169:9006
+      jedis:
         pool:
           max-idle: 100
           min-idle: 1
           max-active: 1000
           max-wait: -1
 
+
     rabbitmq:
         host: 47.106.212.169
         port: 5672
         username: guest
         password: guest
-
-
-    profiles:
-        active: dev
-
 
 eureka:
   client:
@@ -125,6 +126,7 @@ pagehelper:
     params: count=countSql
 
 
+#日志配置文件
 ---
 spring:
   profiles: dev

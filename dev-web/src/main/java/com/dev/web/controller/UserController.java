@@ -4,7 +4,7 @@ package com.dev.web.controller;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.dev.web.entity.User;
 import com.dev.web.service.IUserService;
-import com.frame.common.object.ResponseData;
+import com.frame.common.base.ResponseData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +38,7 @@ public class UserController {
     @ApiOperation(value = "新增用户")
     @ResponseBody
     public ResponseData insertUsers(User user){
-        return new ResponseData(0,"SUCCESS",userService.insert(user));
+        return new ResponseData(0,"SUCCESS",userService.insertAllColumn(user));
     }
     @DeleteMapping(value = "/deleteUsers")
     @ApiOperation(value = "删除用户")
