@@ -1,0 +1,28 @@
+#mq配置文件，新增继续添加list
+queues:
+  - exchangeType : topic
+    exchangeName : topic_test_exchange
+    queueName : topic_test_queue1
+    routingKey : key1
+    durable: false
+    autoDelete : false
+
+  - exchangeType: topic
+    exchangeName: topic_test_exchange
+    queueName: topic_test_queue2
+    routingKey: key2
+    durable: false
+    autoDelete: false
+
+  - exchangeType: fanout
+    exchangeName: fanout_test_exchange
+    queueName: fanout_test_queue1
+    durable: false
+    autoDelete: false
+
+  - exchangeType: fanout
+    exchangeName: fanout_test_exchange
+    queueName: fanout_test_queue2
+    durable: false
+    autoDelete: false
+

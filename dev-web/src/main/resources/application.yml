@@ -138,6 +138,3 @@ spring:
 logging:
   config: classpath:logConfig/logback-prd.xml
 
-
-
-
