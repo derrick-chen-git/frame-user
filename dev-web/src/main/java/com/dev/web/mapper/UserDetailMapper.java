@@ -1,8 +1,7 @@
 package com.dev.web.mapper;
 
 import com.dev.web.entity.UserDetail;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
@@ -10,9 +9,8 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author derrick
- * @since 2018-10-12
+ * @since 2018-10-19
  */
-@Mapper
 public interface UserDetailMapper extends BaseMapper<UserDetail> {
 
 }

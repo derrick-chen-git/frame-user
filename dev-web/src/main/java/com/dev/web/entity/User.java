@@ -2,8 +2,15 @@ package com.dev.web.entity;
 
 import java.util.Date;
 
-import com.baomidou.mybatisplus.annotations.TableLogic;
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import io.swagger.annotations.ApiModel;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -15,12 +22,16 @@ import java.io.Serializable;
  * @since 2018-10-12
  */
 @TableName("t_user")
+@ApiModel(value = "用户对象",description="user")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @JsonSerialize(using= ToStringSerializer.class)
+    @TableId
     private Long id;
+    //@NotNull(message="用户名不能为空")
     private String name;
+    //@NotNull(message="用户密码不能为空")
     private String password;
     private Date createTime;
     @TableLogic

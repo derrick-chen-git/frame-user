@@ -1,7 +1,7 @@
 package com.dev.web.entity;
 
-import java.util.Date;
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.time.LocalDateTime;
 import java.io.Serializable;
 
 /**
@@ -10,7 +10,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author derrick
- * @since 2018-10-12
+ * @since 2018-10-19
  */
 @TableName("t_user_detail")
 public class UserDetail implements Serializable {
@@ -18,15 +18,24 @@ public class UserDetail implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+
     private Long userId;
+
     private String name;
+
     private Integer age;
+
     private String address;
-    private Integer sex;
+
+    private Boolean sex;
+
     private String remark;
-    private Integer isDelete;
-    private Date createTime;
-    private Date updateTime;
+
+    private Boolean isDelete;
+
+    private LocalDateTime createTime;
+
+    private LocalDateTime updateTime;
 
 
     public Long getId() {
@@ -69,11 +78,11 @@ public class UserDetail implements Serializable {
         this.address = address;
     }
 
-    public Integer getSex() {
+    public Boolean getSex() {
         return sex;
     }
 
-    public void setSex(Integer sex) {
+    public void setSex(Boolean sex) {
         this.sex = sex;
     }
 
@@ -85,27 +94,27 @@ public class UserDetail implements Serializable {
         this.remark = remark;
     }
 
-    public Integer getIsDelete() {
+    public Boolean getDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(Integer isDelete) {
+    public void setDelete(Boolean isDelete) {
         this.isDelete = isDelete;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
+    public LocalDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
 
