@@ -8,26 +8,26 @@ import java.util.Date;
  * Created by Administrator on 2018/7/5.
  */
 public class UserInfoDTO implements Serializable {
-    private long userId;
-    private String userName;
+    private long id;
+    private String name;
     private String password;
     private Date createTime;
     private Date updateTime;
 
-    public long getUserId() {
-        return userId;
+    public long getId() {
+        return id;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
@@ -53,4 +53,8 @@ public class UserInfoDTO implements Serializable {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    public UserInfoDTO() {
+    }
+
 }

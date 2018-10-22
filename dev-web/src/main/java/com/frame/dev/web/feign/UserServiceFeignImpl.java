@@ -1,28 +1,33 @@
-package com.frame.dev.web.feignservice;
+package com.frame.dev.web.feign;
 
+import com.frame.common.base.ResponseData;
 import com.frame.dev.api.api.IUserFeignService;
 import com.frame.dev.api.vo.UserInfoDTO;
 import com.frame.dev.web.entity.User;
 import com.frame.dev.web.service.IUserService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-@FeignClient("dev-web")
+@RestController
+@RequestMapping("/userFeign")
 public class UserServiceFeignImpl implements IUserFeignService {
     @Resource
     private IUserService userService;
     @Override
+    @RequestMapping("/getAllUsers")
     public List<UserInfoDTO> getAllUsers() {
-        List<User> users = userService.getAllUsers().getData();
+        ResponseData<List<User>> res = userService.getAllUsers();
+        List<User> users =res.getData();
         List<UserInfoDTO> dtos = new ArrayList<>();
         if(null != users && users.size() > 0){
             for(User user : users){
                 UserInfoDTO userInfoDTO = new UserInfoDTO();
-                BeanUtils.copyProperties(userInfoDTO,user);
+                BeanUtils.copyProperties(user,userInfoDTO);
                 dtos.add(userInfoDTO);
             }
         }

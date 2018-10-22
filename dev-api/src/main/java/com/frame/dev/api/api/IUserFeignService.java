@@ -11,7 +11,7 @@ public interface IUserFeignService {
     /**
      *获取所有用户
      */
-    @RequestMapping(value = "/user/getAllUsers", method = RequestMethod.GET)
+    @RequestMapping(value = "/userFeign/getAllUsers", method = RequestMethod.GET)
     List<UserInfoDTO> getAllUsers();
 
 }
