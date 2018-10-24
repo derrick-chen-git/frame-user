@@ -42,7 +42,7 @@ public class UserController {
     @PostMapping(value = "/insertUsers")
     @ApiOperation(value = "新增用户")
     @ResponseBody
-    public ResponseData insertUsers(@Valid User user){
+    public ResponseData insertUsers(@Valid @RequestBody User user){
         return new ResponseData(0,"SUCCESS",userService.insertUser(user));
     }
     @DeleteMapping(value = "/deleteUsers")

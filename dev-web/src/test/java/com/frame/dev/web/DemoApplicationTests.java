@@ -15,8 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 //@EnableBinding(TestOutput.class)
 public class DemoApplicationTests {
-	@Autowired
-	private RabbitMqUtils rabbitMqUtils;
+/*	@Autowired
+	private RabbitMqUtils rabbitMqUtils;*/
 	//@Autowired
 	//private TestOutput testOutput;
 
@@ -28,7 +28,7 @@ public class DemoApplicationTests {
 	public void contextLoads() {
 	}
 
-	@Test
+	/*@Test
 	public void sendMsg(){
 		User user = new User();
 		user.setId(1L);
@@ -39,7 +39,7 @@ public class DemoApplicationTests {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 	@Test
 	public void sendFMsg(){
 //		rabbitMqUtils.convertAndSend("fanout_test_exchange",null,"fanout消息+++++++++++++++++++");

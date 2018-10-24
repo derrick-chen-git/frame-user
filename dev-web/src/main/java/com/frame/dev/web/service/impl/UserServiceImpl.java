@@ -79,7 +79,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 Long id = LongIdGenerator.getLongId();
                 user.setId(id);
                 user.setCreateTime(new Date());
-                this.insertUser(user);
+                this.save(user);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

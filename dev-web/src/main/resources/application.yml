@@ -21,81 +21,12 @@ feign:
     enabled: true
 
 spring:
-    cloud:
-      stream:
-        binders: # 在此处配置要绑定的rabbitmq的服务信息；
-          defaultRabbit: # 表示定义的名称，用于于binding整合
-            type: rabbit # 消息组件类型
-            environment: # 设置rabbitmq的相关的环境配置
-              spring:
-                rabbitmq:
-                 addresses: 47.106.212.169:5672
-                 username: guest
-                 password: guest
-                 virtual-host: /
-        bindings: # 服务的整合处理
-          test1-input: # 这个名字是一个通道的名称，在分析具体源代码的时候会进行说明
-            destination: test1-exchange # 表示要使用的Exchange名称定义
-            content-type: application/json # 设置消息类型，本次为对象json，如果是文本则设置“text/plain”
-            binder: defaultRabbit # 设置要绑定的消息服务的具体设置
     application:
       name: frame-dev
+
     #环境dev，pro 用于配置获取
     profiles:
       active: dev
-    #数据源，一主两从，读写分离
-    datasource:
-      master:
-        jdbc-url: jdbc:mysql://47.106.212.169:3307/test?useUnicode=true&amp;characterEncoding=utf8&amp;emptyStringsConvertToZero=true
-        username: root
-        password: root
-        driver-class-name: com.mysql.jdbc.Driver
-        type: com.alibaba.druid.pool.DruidDataSource
-
-        max-active: 20
-        initial-size: 1
-        min-idle: 3
-        max-wait: 600
-        time-between-eviction-runs-millis: 60000
-        min-evictable-idle-time-millis: 300000
-        test-while-idle: true
-        test-on-borrow: false
-        test-on-return: false
-        poolPreparedStatements: true
-      slave1:
-        jdbc-url: jdbc:mysql://47.106.212.169:3308/test?useUnicode=true&amp;characterEncoding=utf8&amp;emptyStringsConvertToZero=true
-        username: onlyselect
-        password: 123456
-        driver-class-name: com.mysql.jdbc.Driver
-        type: com.alibaba.druid.pool.DruidDataSource
-
-        max-active: 20
-        initial-size: 1
-        min-idle: 3
-        max-wait: 600
-        time-between-eviction-runs-millis: 60000
-        min-evictable-idle-time-millis: 300000
-        test-while-idle: true
-        test-on-borrow: false
-        test-on-return: false
-        poolPreparedStatements: true
-      slave2:
-        jdbc-url: jdbc:mysql://47.106.212.169:3309/test?useUnicode=true&amp;characterEncoding=utf8&amp;emptyStringsConvertToZero=true
-        username: onlyselect
-        password: 123456
-        driver-class-name: com.mysql.jdbc.Driver
-        type: com.alibaba.druid.pool.DruidDataSource
-
-        max-active: 20
-        initial-size: 1
-        min-idle: 3
-        max-wait: 600
-        time-between-eviction-runs-millis: 60000
-        min-evictable-idle-time-millis: 300000
-        test-while-idle: true
-        test-on-borrow: false
-        test-on-return: false
-        poolPreparedStatements: true
 
     redis:
       cluster:
@@ -121,40 +52,59 @@ spring:
         port: 5672
         username: guest
         password: guest
-        publisher-confirms: true
-        publisher-returns: true
-        listener:
-          simple:
-            acknowledge-mode: manual
-            retry:
-              enabled: true
+# 集成方式修改为spring cloud stream ，此配置暂时不用
+#        publisher-confirms: true
+#        publisher-returns: true
+#        listener:
+#          simple:
+#           acknowledge-mode: manual
+#           retry:
+#              enabled: true
 
-mybatis-plus:
-      mapper-locations: classpath:mapper/*.xml
-      type-aliases-package: com.frame.dev.web.entity
-      global-config:
-        db-config:
-          column-like : true
-          #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
-          #id-type: 1
-          #驼峰下划线转换
-          #db-column-underline: true
-          logic-delete-value: 1
-          logic-not-delete-value: 0
-          db-type: mysql
-        #sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
-      configuration:
-        map-underscore-to-camel-case: true
-        cache-enabled: false
-       # jdbc-type-for-null: null
+    cloud:
+      stream:
+        binders: # 在此处配置要绑定的rabbitmq的服务信息；
+          defaultRabbit: # 表示定义的名称，用于于binding整合
+            type: rabbit # 消息组件类型
+        #            environment:
+        #              spring:
+        #                rabbitmq:
+        #                  host: 47.106.212.169
+        #                  username: guest
+        #                  password: guest
+        #                  virtual-host: /
+        bindings:
+          test1-input: # 通道
+            destination: test1-exchange # Exchange
+            content-type: application/json # 设置消息类型，本次为对象json，如果是文本则设置“text/plain”
+            binder: defaultRabbit # 设置要绑定的消息服务的具体设置
+            group: frame-dev #消费分组
+          test2-input: # 通
+            destination: test1-exchange # Exchange
+            content-type: application/json # 设置消息类型，本次为对象json，如果是文本则设置“text/plain”
+            binder: defaultRabbit # 设置要绑定的消息服务的具体设置
+            group: frame-dev2 #消费分组
+        rabbit:
+          bindings:
+            test1-input:
+              consumer:
+                maxAttempts: 3
+                bindingRoutingKey: addProduct.*      # 默认为#，如果是动态binding模式，producer发送的routingKey 默认为destination
+                acknowledge-mode: manual
+                autoBindDlq: true #启用死信队列，默认会生成一个DLX EXCHANGE，当消息重复消费失败后
+                dlqDeadLetterExchange: test1-input-deadLetter.DLX  #如果该列声明，那么deadLetterExchange也要声明，这个保持一致
+                deadLetterExchange: test1-input-deadLetter.DLX #与dlqDeadLetterExchange保持一致
+                requeueRejected: true #默认false，只能抛AmqpRejectAndDontRequeueException消息才能到死信队列，如果为true，所有错误消息都会抛到死信队列
+                republishToDlq: true #该值为false如果设置了死信队列，消息对原封不动的发送到死信队列，如果为true，则消息对带上错误信息发送至死信队列
+                deadLetterQueueName: test1-input-deadLetter.dlq
+                #prefix: feign-test2 #声明exchange、queue前缀
 
-pagehelper:
-    helperDialect: mysql
-    reasonable: true
-    supportMethodsArguments: true
-    params: count=countSql
+            test2-input:
+              consumer:
+                bindingRoutingKey: Product.*
 
-#redis分布式锁实现，https://github.com/redisson/redisson/wiki/ redisson配置 参开官方文档
+
+#--------redis分布式锁实现，https://github.com/redisson/redisson/wiki/ redisson配置 参开官方文档-------------------------
 redisson:
   node-addresses:
   - "redis://47.106.212.169:9001"
@@ -167,7 +117,48 @@ redisson:
   load-balancer: org.redisson.connection.balancer.RoundRobinLoadBalancer
   read-mode: "SLAVE"
 
+sharding.jdbc:
+  data-sources:
+    ds_master:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://47.106.212.169:3307/test?useUnicode=true&characterEncoding=utf-8&useSSL=true
+      username: root
+      password: root
+    ds_slave_0:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://47.106.212.169:3308/test?useUnicode=true&characterEncoding=utf-8&useSSL=true
+      username: onlyselect
+      password: 123456
+    ds_slave_1:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://47.106.212.169:3309/test?useUnicode=true&characterEncoding=utf-8&useSSL=true
+      username: onlyselect
+      password: 123456
+  master-slave-rule:
+    name: ds_ms
+    master-data-source-name: ds_master
+    slave-data-source-names: ds_slave_0,ds_slave_1
+    load-balance-algorithm-type: round_robin
 
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.frame.dev.web.entity
+  global-config:
+    #refresh: true
+    db-config:
+      column-like : true
+      #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+      #id-type: 1
+      #驼峰下划线转换
+      db-column-underline: true
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      db-type: mysql
+      #sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    jdbc-type-for-null: null
 #日志配置文件
 ---
 spring:

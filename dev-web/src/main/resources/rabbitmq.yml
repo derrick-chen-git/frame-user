@@ -1,3 +1,4 @@
+#--------------------集成方式已修改成spring cloud stream ，此配置暂时不用，后续有需要再放开 具体使用在common.rabbirmq包下——————————————
 #mq配置文件，新增继续添加list
 queues:
   - exchangeType : topic
