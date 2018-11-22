@@ -6,8 +6,8 @@ eureka:
     service-url:
       defaultZone:  http://47.106.212.169:8761/eureka/
     enabled: true
-    registerWithEureka: true
-    fetchRegistry: true
+    registerWithEureka: false
+    fetchRegistry: false
   instance:
     lease-renewal-interval-in-seconds: 5
     lease-expiration-duration-in-seconds: 15
@@ -103,7 +103,6 @@ spring:
               consumer:
                 bindingRoutingKey: Product.*
 
-
 #--------redis分布式锁实现，https://github.com/redisson/redisson/wiki/ redisson配置 参开官方文档-------------------------
 redisson:
   node-addresses:
@@ -171,5 +170,4 @@ spring:
 logging:
   config: classpath:logConfig/logback-prd.xml
 
-feign:
 

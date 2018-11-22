@@ -13,8 +13,8 @@ import com.frame.common.base.ResponseData;
 import com.frame.common.redis.RedisUtils;
 import com.frame.common.utils.LongIdGenerator;
 import com.frame.dev.web.constant.RedisKey;
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
+/*import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;*/
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,8 +36,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Autowired
     private RedisUtils redisUtils;
-    @Autowired
-    private RedissonClient redissonClient;
+//    @Autowired
+//    private RedissonClient redissonClient;
 
     @Override
     public ResponseData<List<User>> getAllUsers() {
@@ -67,10 +67,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Transactional
     public Object insertUser(User user) {
         //根据用户名加锁，防止多次点击重复插入
-        RLock lock = redissonClient.getLock(String.format(RedisLock.INSERT_USER_KEY_NAME,user.getName()));
+        //RLock lock = redissonClient.getLock(String.format(RedisLock.INSERT_USER_KEY_NAME,user.getName()));
         try {
-            boolean isLock = lock.tryLock(3,10, TimeUnit.SECONDS);
-            if(isLock) {
+            //boolean isLock = lock.tryLock(3,10, TimeUnit.SECONDS);
+            //if(isLock) {
                 //判断用户是否已存在
                 User oldUser = this.getOne(new QueryWrapper<User>().eq("name", user.getName()));
                 if (null != oldUser) {
@@ -80,11 +80,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 user.setId(id);
                 user.setCreateTime(new Date());
                 this.save(user);
-            }
-        } catch (InterruptedException e) {
+         //   }
+        } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            lock.unlock();
+       //     lock.unlock();
         }
         return new ResponseData<>(0,"success");
     }

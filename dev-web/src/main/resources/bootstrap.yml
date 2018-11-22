@@ -1,0 +1,14 @@
+##分布式配置中心
+#spring:
+#  profiles:
+#    active: pro
+#  application:
+#    name: frame-dev
+#  cloud:
+#    config:
+#      discovery:
+#        enabled: true
+#        service-id: frame-config
+#      label: master
+#      uri: http://47.106.212.169:8180/
+#      profile: pro
