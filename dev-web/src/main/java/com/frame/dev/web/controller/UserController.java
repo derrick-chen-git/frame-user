@@ -1,12 +1,12 @@
 package com.frame.dev.web.controller;
 
+import com.frame.common.base.ResponseData;
 import com.frame.dev.web.entity.User;
 import com.frame.dev.web.service.IUserService;
-import com.frame.common.base.ResponseData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -54,7 +54,7 @@ public class UserController {
     @GetMapping(value = "/getUserPage")
     @ApiOperation(value = "分页查询用户")
     @ResponseBody
-    public ResponseData deleteUsersUsers(int pagenNum,int pageSize){
+    public ResponseData deleteUsersUsers(int pagenNum, int pageSize){
         return this.userService.getUserPage(pagenNum,pageSize);
     }
     @PutMapping

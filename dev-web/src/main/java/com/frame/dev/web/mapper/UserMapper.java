@@ -1,8 +1,7 @@
 package com.frame.dev.web.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.frame.dev.web.entity.User;
-import org.apache.ibatis.annotations.Mapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
@@ -10,9 +9,8 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author derrick
- * @since 2018-10-12
+ * @since 2018-12-28
  */
-@Mapper
 public interface UserMapper extends BaseMapper<User> {
 
 }

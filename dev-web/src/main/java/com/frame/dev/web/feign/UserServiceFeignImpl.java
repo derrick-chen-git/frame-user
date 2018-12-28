@@ -14,12 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/userFeign")
 public class UserServiceFeignImpl implements IUserFeignService {
     @Resource
     private IUserService userService;
     @Override
-    @RequestMapping("/getAllUsers")
     public List<UserInfoDTO> getAllUsers() {
         ResponseData<List<User>> res = userService.getAllUsers();
         List<User> users =res.getData();

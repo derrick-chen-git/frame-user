@@ -1,9 +1,9 @@
 package com.frame.dev.web.service.impl;
 
-import com.frame.dev.web.service.IUserDetailService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.frame.dev.web.entity.UserDetail;
 import com.frame.dev.web.mapper.UserDetailMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.frame.dev.web.service.IUserDetailService;
 import org.springframework.stereotype.Service;
 
 /**

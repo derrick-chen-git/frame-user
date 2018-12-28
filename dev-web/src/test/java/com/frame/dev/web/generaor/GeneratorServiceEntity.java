@@ -6,10 +6,7 @@ package com.frame.dev.web.generaor;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.PackageConfig;
-import com.baomidou.mybatisplus.generator.config.StrategyConfig;
+import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import org.junit.Test;
 
@@ -24,14 +21,15 @@ public class GeneratorServiceEntity {
 
     @Test
     public void generateCode() {
-        String packageName = "com.dev.web";
+        String packageName = "com.frame.dev.web";
         boolean serviceNameStartWithI = true;//user -> UserService, 设置成true: user -> IUserService
-        generateByTables(serviceNameStartWithI, packageName, "t_user_detail");
+        String[] tableNames = {"t_user_detail","t_user"};
+        generateByTables(serviceNameStartWithI, packageName, tableNames);
     }
 
     private void generateByTables(boolean serviceNameStartWithI, String packageName, String... tableNames) {
         GlobalConfig config = new GlobalConfig();
-        String dbUrl = "jdbc:mysql://47.106.212.169:3307/test";
+        String dbUrl = "jdbc:mysql://47.106.212.169:3306/frame-user?useUnicode=true&characterEncoding=utf-8&useSSL=false";
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         dataSourceConfig.setDbType(DbType.MYSQL)
                 .setUrl(dbUrl)
@@ -48,23 +46,38 @@ public class GeneratorServiceEntity {
                 .setInclude(tableNames);//修改替换成你需要的表名，多个表名传数组
         config.setActiveRecord(false)
                 .setAuthor("derrick")
-                .setOutputDir("E:\\privateCode\\frame\\dev-frame\\dev-web\\src\\main\\java")
-                .setFileOverride(true);
+                .setOutputDir("/Users/lemonade/code/frame/frame-dev/dev-web/src/main/java")
+                .setBaseResultMap(true) // 基本的字段映射
+                .setBaseColumnList(true) // 基本的sql片段
+                .setFileOverride(true).setSwagger2(true);
+
         if (!serviceNameStartWithI) {
             config.setServiceName("%sService");
         }
+       PackageConfig packageConfig =  new PackageConfig()
+                .setParent(packageName)
+                .setController("controller")
+                .setEntity("entity")
+                .setMapper("mapper")
+                .setEntity("entity")
+               .setService("service");
+        /*TemplateConfig tc = new TemplateConfig();
+        tc.setController("/templates/controller.java.vm");
+        tc.setService("/templates/service.java.vm");
+        tc.setServiceImpl("/templates/serviceImpl.java.vm");
+        tc.setEntity("/templates/entity.java.vm");
+        tc.setMapper("/templates/mapper.java.vm");*/
+
         new AutoGenerator().setGlobalConfig(config)
                 .setDataSource(dataSourceConfig)
                 .setStrategy(strategyConfig)
-                .setPackageInfo(
-                        new PackageConfig()
-                                .setParent(packageName)
-                                .setController("controller")
-                                .setEntity("entity")
+                .setPackageInfo(packageConfig
                 ).execute();
+
+
     }
 
-    private void generateByTables(String packageName, String... tableNames) {
+   /* private void generateByTables(String packageName, String... tableNames) {
         generateByTables(true, packageName, tableNames);
-    }
+    }*/
 }

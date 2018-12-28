@@ -9,7 +9,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @MapperScan(value = "com.frame.dev.web.mapper")
-@ComponentScan(value = {"com.frame.common","com.frame.dev.web"})
+@ComponentScan(value = {"com.frame.dev.web","com.frame.common"})
 @EnableSwagger2
 @EnableEurekaClient
 public class Application {
