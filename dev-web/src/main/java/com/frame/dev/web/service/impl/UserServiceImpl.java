@@ -12,6 +12,7 @@ import com.frame.dev.web.entity.User;
 import com.frame.dev.web.mapper.UserMapper;
 import com.frame.dev.web.service.IUserService;
 import com.frame.starter.redis.utils.RedisUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ import java.util.concurrent.TimeUnit;
  * @since 2018-10-12
  */
 @Service
+@Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
     @Autowired
@@ -40,6 +42,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public ResponseData<List<User>> getAllUsers() {
+        log.info("获取所有用户++++++++++++++");
         return new ResponseData(0,"success",this.list(new QueryWrapper<>()));
     }
 

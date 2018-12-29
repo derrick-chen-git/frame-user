@@ -99,6 +99,10 @@ sharding.jdbc:
        url: jdbc:mysql://47.106.212.169:3306/frame-user?useUnicode=true&characterEncoding=utf-8&useSSL=false
        username: root
        password: root
+       max-active: 8
+       max-wait: 60000
+       initial-size: 1
+       min-idle: 1
      ds_slave_0:
        driver-class-name: com.mysql.jdbc.Driver
        url: jdbc:mysql://47.106.212.169:3307/frame-user?useUnicode=true&characterEncoding=utf-8&useSSL=false
@@ -109,6 +113,8 @@ sharding.jdbc:
     master-data-source-name: ds_master
     slave-data-source-names: ds_slave_0
     load-balance-algorithm-type: round_robin
+
+
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
@@ -130,15 +136,15 @@ mybatis-plus:
     cache-enabled: false
     jdbc-type-for-null: null
 #日志配置文件
----
-spring:
-  profiles: dev
-logging:
-  config: classpath:logConfig/logback-dev.xml
----
-spring:
-  profiles: prd
-logging:
-  config: classpath:logConfig/logback-prd.xml
+#---
+#spring:
+#  profiles: dev
+#logging:
+#  config: classpath:logConfig/logback-dev.xml
+#---
+#spring:
+#  profiles: prd
+#logging:
+#  config: classpath:logConfig/logback-prd.xml
 
 

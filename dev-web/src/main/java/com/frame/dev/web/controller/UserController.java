@@ -5,6 +5,7 @@ import com.frame.dev.web.entity.User;
 import com.frame.dev.web.service.IUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,7 @@ import javax.validation.Valid;
 @Controller
 @Api(value = "用户相关控制器")
 @RequestMapping("/user")
+@Slf4j
 public class UserController {
     @Resource
     private IUserService userService;
@@ -31,6 +33,7 @@ public class UserController {
     @ApiOperation(value = "查找所有用户")
     @ResponseBody
     public ResponseData getAllUsers(){
+        log.info("获取所有用户++++++++++++++");
         return userService.getAllUsers();
     }
     @GetMapping(value = "/getUserById")
