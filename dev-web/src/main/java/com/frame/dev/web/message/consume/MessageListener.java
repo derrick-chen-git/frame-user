@@ -1,3 +1,4 @@
+/*
 package com.frame.dev.web.message.consume;
 
 import com.frame.dev.web.message.channel.input.TestInput;
@@ -24,7 +25,7 @@ public class MessageListener {
         }
 
     }
-   /* @StreamListener(TestInput.TEST1_INPUT_DLQ)
+ @StreamListener(TestInput.TEST1_INPUT_DLQ)
     public void input1Dlq(Message<String> message,@Header(AmqpHeaders.CHANNEL) Channel channel,
                        @Header(AmqpHeaders.DELIVERY_TAG) Long deliveryTag) throws Exception {
         System.err.println("【*** 消息接收 test1私信队列 处理 ***】" + message.getPayload());
@@ -34,9 +35,11 @@ public class MessageListener {
             throw new Exception(ex.getMessage());
         }
 
-    }*/
+    }
+
     @StreamListener(TestInput.TEST2_INPUT)
     public void input2(Message<String> message) {
         System.err.println("【*** 消息接收222 ***】" + message.getPayload());
     }
 }
+*/

@@ -1,16 +1,21 @@
 package com.frame.dev.web;
 
+import com.frame.starter.rabbitmq.sender.RabbitMqSender;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.UUID;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 //@EnableBinding(TestOutput.class)
 public class DemoApplicationTests {
 	@Autowired
+	RabbitMqSender rabbitSender;
 /*	@Autowired
 	private RabbitMqUtils rabbitMqUtils;*/
 	//@Autowired
@@ -44,6 +49,9 @@ public class DemoApplicationTests {
 	public void sendFMsgadasda(){
 		rabbitMqConfig.seng();
 	}*/
-
+	@Test
+	public void transSend(){
+		rabbitSender.sendMessage("topic_test_exchange","key1","++++测试topickey1+++",false);
+	}
 
 }

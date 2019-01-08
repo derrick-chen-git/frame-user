@@ -1,3 +1,4 @@
+/*
 package com.frame.dev.web.message.channel.input;
 
 import org.springframework.cloud.stream.annotation.Input;
@@ -13,6 +14,12 @@ public interface TestInput{
     SubscribableChannel test1Input();
     @Input("test2-input")
     SubscribableChannel test2Input();
-   /* @Input(TEST1_INPUT_DLQ)
-    SubscribableChannel test2InputDlq();*/
+   */
+/* @Input(TEST1_INPUT_DLQ)
+    SubscribableChannel test2InputDlq();*//*
+
 }
+
+
+
+*/
