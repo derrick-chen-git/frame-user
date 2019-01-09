@@ -51,7 +51,7 @@ public class DemoApplicationTests {
 	}*/
 	@Test
 	public void transSend(){
-		rabbitSender.sendMessage("topic_test_exchange","key1","++++测试topickey1+++",false);
+		rabbitSender.sendTransMessage("topic_test_exchange","key1","++++测ggjj试topickey1+++",false);
 	}
 
 }

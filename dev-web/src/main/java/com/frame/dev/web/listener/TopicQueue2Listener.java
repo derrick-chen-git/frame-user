@@ -1,4 +1,4 @@
-package com.frame.dev.web.rabbitmq.listener;
+package com.frame.dev.web.listener;
 
 import com.frame.starter.rabbitmq.listener.AbstractMessageListener;
 import lombok.extern.slf4j.Slf4j;
