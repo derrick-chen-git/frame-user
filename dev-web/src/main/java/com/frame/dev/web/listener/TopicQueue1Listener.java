@@ -12,7 +12,9 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class TopicQueue1Listener extends AbstractMessageListener {
     @Override
-    public void receiveMessage(Message message) {
-       log.info("TopicQueue1Listener"+ new String(message.getBody()));
+    public void receiveMessage(Message message) throws Exception {
+        this.setMaxConsumerCount(4);
+       log.info("+++++++++tipic1queue1+++消费消息：{}",new String(message.getBody()));
+       throw new Exception("奥术大师大所大所大多");
     }
 }

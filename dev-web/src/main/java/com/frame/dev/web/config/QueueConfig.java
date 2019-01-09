@@ -2,8 +2,8 @@ package com.frame.dev.web.config;
 
 import com.frame.dev.web.listener.TopicQueue1Listener;
 import com.frame.dev.web.listener.TopicQueue2Listener;
+import com.frame.dev.web.listener.TopocQueue1DlxeListener;
 import com.frame.starter.rabbitmq.constans.MQConstants;
-import com.frame.dev.web.listener.DeadLetterMessageListener;
 import com.frame.starter.rabbitmq.utils.MyQueue;
 import com.frame.starter.rabbitmq.utils.QueueArgument;
 import com.frame.starter.rabbitmq.utils.RabbitMqUtils;
@@ -98,13 +98,13 @@ public class QueueConfig {
 
     @Bean
     public SimpleMessageListenerContainer deadLetterListenerContainer(ConnectionFactory connectionFactory,
-                                                                      DeadLetterMessageListener deadLetterMessageListener) {
+                                                                      TopocQueue1DlxeListener topocQueue1DlxeListener) {
 
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
         container.setQueues(dlxQueue());
         container.setExposeListenerChannel(true);
         container.setAcknowledgeMode(AcknowledgeMode.MANUAL);
-        container.setMessageListener(deadLetterMessageListener);
+        container.setMessageListener(topocQueue1DlxeListener);
         /** 设置消费者能处理消息的最大个数 */
         container.setPrefetchCount(100);
         return container;
