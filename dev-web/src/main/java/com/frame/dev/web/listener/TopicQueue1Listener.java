@@ -15,6 +15,6 @@ public class TopicQueue1Listener extends AbstractMessageListener {
     public void receiveMessage(Message message) throws Exception {
         this.setMaxConsumerCount(4);
        log.info("+++++++++tipic1queue1+++消费消息：{}",new String(message.getBody()));
-       throw new Exception("奥术大师大所大所大多");
+       //throw new Exception("奥术大师大所大所大多");
     }
 }

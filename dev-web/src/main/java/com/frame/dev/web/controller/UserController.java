@@ -3,9 +3,11 @@ package com.frame.dev.web.controller;
 import com.frame.common.base.ResponseData;
 import com.frame.dev.web.entity.User;
 import com.frame.dev.web.service.IUserService;
+import com.frame.starter.rabbitmq.sender.RabbitMqSender;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +28,8 @@ import javax.validation.Valid;
 @RequestMapping("/user")
 @Slf4j
 public class UserController {
+    @Autowired
+    private RabbitMqSender rabbitMqSender;
     @Resource
     private IUserService userService;
 
@@ -67,6 +71,14 @@ public class UserController {
         return this.userService.updateUser(user);
     }
 
+    @PostMapping(value = "/sendMq")
+    @ApiOperation(value = "发送队列消息")
+    @ResponseBody
+    public ResponseData getCache(String exchange,String key,String msg){
+        log.info("发送队列消息,exchange:{},key:{},msg:{}",exchange,key,msg);
+        rabbitMqSender.sendTransMessage(exchange,key,msg,true);
+        return ResponseData.success();
+    }
 
 }
 

@@ -1,7 +1,6 @@
 package com.frame.dev.web.config;
 
 import com.frame.dev.web.listener.TopicQueue1Listener;
-import com.frame.dev.web.listener.TopicQueue2Listener;
 import com.frame.dev.web.listener.TopocQueue1DlxeListener;
 import com.frame.starter.rabbitmq.constans.MQConstants;
 import com.frame.starter.rabbitmq.utils.MyQueue;
@@ -10,7 +9,6 @@ import com.frame.starter.rabbitmq.utils.RabbitMqUtils;
 import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -77,36 +75,13 @@ public class QueueConfig {
             return this.rabbitMqUtils.init(myQueue);
     }
     @Bean
-    public SimpleMessageListenerContainer TopicQueue1ListenerContainer(ConnectionFactory connectionFactory, TopicQueue1Listener topicQueue1Listener) {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
-        container.setQueues(topicTestQueue1());
-        container.setExposeListenerChannel(true);
-        container.setAcknowledgeMode(AcknowledgeMode.MANUAL);
-        container.setMessageListener(topicQueue1Listener);
-        return container;
+    public SimpleMessageListenerContainer TopicQueue1ListenerContainer(TopicQueue1Listener topicQueue1Listener) {
+        return rabbitMqUtils.initListenerContainer(topicTestQueue1(),topicQueue1Listener,AcknowledgeMode.MANUAL,100);
     }
 
     @Bean
-    public SimpleMessageListenerContainer TopicQueue2ListenerContainer(ConnectionFactory connectionFactory, TopicQueue2Listener topicQueue2Listener) {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
-        container.setQueues(topicTestQueue2());
-        container.setExposeListenerChannel(true);
-        container.setAcknowledgeMode(AcknowledgeMode.MANUAL);
-        container.setMessageListener(topicQueue2Listener);
-        return container;
-    }
+    public SimpleMessageListenerContainer deadLetterListenerContainer(TopocQueue1DlxeListener topocQueue1DlxeListener) {
+        return rabbitMqUtils.initListenerContainer(dlxQueue(),topocQueue1DlxeListener,AcknowledgeMode.MANUAL,100);
 
-    @Bean
-    public SimpleMessageListenerContainer deadLetterListenerContainer(ConnectionFactory connectionFactory,
-                                                                      TopocQueue1DlxeListener topocQueue1DlxeListener) {
-
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
-        container.setQueues(dlxQueue());
-        container.setExposeListenerChannel(true);
-        container.setAcknowledgeMode(AcknowledgeMode.MANUAL);
-        container.setMessageListener(topocQueue1DlxeListener);
-        /** 设置消费者能处理消息的最大个数 */
-        container.setPrefetchCount(100);
-        return container;
     }
 }
