@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -37,8 +38,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Autowired
     private RedisUtils redisUtils;
-    @Autowired
-    private RedissonClient redissonClient;
+
 
     @Override
     public ResponseData<List<User>> getAllUsers() {
@@ -68,10 +68,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     @Transactional
     public Object insertUser(User user) {
-        //根据用户名加锁，防止多次点击重复插入
-        RLock lock = redissonClient.getLock(String.format(RedisLock.INSERT_USER_KEY_NAME,user.getName()));
+        String lockKey = String.format(RedisLock.INSERT_USER_KEY_NAME,user.getName());
         try {
-            boolean isLock = lock.tryLock(3,10, TimeUnit.SECONDS);
+            /* 尝试加锁，最多等待3秒,加锁10秒后自动解锁*/
+            boolean isLock = redisUtils.acquireLock(lockKey,3,10, TimeUnit.SECONDS);
             if(isLock) {
                 //判断用户是否已存在
                 User oldUser = this.getOne(new QueryWrapper<User>().eq("name", user.getName()));
@@ -81,13 +81,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 Long id = LongIdGenerator.getLongId();
                 user.setId(id);
                 this.save(user);
+                return new ResponseData<>(0,"success");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            lock.unlock();
+            redisUtils.releaseLock(lockKey);
         }
-        return new ResponseData<>(0,"success");
+        return null;
     }
 
     @Override

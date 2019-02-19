@@ -1,0 +1,155 @@
+server:
+  port: 8110
+
+eureka:
+  client:
+    service-url:
+      defaultZone:  http://47.106.212.169:8761/eureka/
+    enabled: true
+    registerWithEureka: true
+    fetchRegistry: true
+  instance:
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 15
+    prefer-ip-address: true
+    #instance-id: ${spring.application.name}-${eureka.instance.ip-address}:${server.port}
+  healthcheck:
+    enabled: true
+
+feign:
+  hystrix:
+    enabled: true
+
+spring:
+      #环境dev，pro 用于配置获取
+  profiles:
+    active: dev
+
+  redisson:
+    database: 0
+    password: derrick
+    timeout: 3000
+  #sentinel/cluster/single
+    mode: single
+  #连接池配置
+    pool:
+      max-idle: 16
+      min-idle: 8
+      max-active: 8
+      max-wait: 3000
+      conn-timeout: 3000
+      so-timeout: 3000
+      size: 10
+  #单机配置
+    single:
+      address: 47.106.212.169:6379
+  #redis
+  redis:
+    host: 47.106.212.169
+    password: derrick
+    port: 6379
+  rabbitmq:
+      host: 47.106.212.169
+      port: 5672
+      username: derrick
+      password: derrick
+      virtual-host: my_vhost
+      cache-size: 100
+#+++++++++++++++++++spring cloud stream +++++++++++++++++++++++++++++
+#  cloud:
+#    stream:
+#      binders: # 在此处配置要绑定的rabbitmq的服务信息；
+#        defaultRabbit: # 表示定义的名称，用于于binding整合
+#          type: rabbit # 消息组件类型
+#      bindings:
+#        test1-input: # 通道
+#          destination: test1-exchange # Exchange
+#          content-type: application/json # 设置消息类型，本次为对象json，如果是文本则设置“text/plain”
+#          binder: defaultRabbit # 设置要绑定的消息服务的具体设置
+#          group: frame-dev #消费分组
+#        test2-input: # 通
+#          destination: test1-exchange # Exchange
+#          content-type: application/json # 设置消息类型，本次为对象json，如果是文本则设置“text/plain”
+#          binder: defaultRabbit # 设置要绑定的消息服务的具体设置
+#          group: frame-dev2 #消费分组
+#      rabbit:
+#        bindings:
+#          test1-input:
+#            consumer:
+#              maxAttempts: 3
+#              bindingRoutingKey: addProduct.*      # 默认为#，如果是动态binding模式，producer发送的routingKey 默认为destination
+#              acknowledge-mode: manual
+#              autoBindDlq: true #启用死信队列，默认会生成一个DLX EXCHANGE，当消息重复消费失败后
+#              dlqDeadLetterExchange: test1-input-deadLetter.DLX  #如果该列声明，那么deadLetterExchange也要声明，这个保持一致
+#              deadLetterExchange: test1-input-deadLetter.DLX #与dlqDeadLetterExchange保持一致
+#              requeueRejected: true #默认false，只能抛AmqpRejectAndDontRequeueException消息才能到死信队列，如果为true，所有错误消息都会抛到死信队列
+#              republishToDlq: true #该值为false如果设置了死信队列，消息对原封不动的发送到死信队列，如果为true，则消息对带上错误信息发送至死信队列
+#              deadLetterQueueName: test1-input-deadLetter.dlq
+                #prefix: feign-test2 #声明exchange、queue前缀
+
+#          test2-input:
+#            consumer:
+#              bindingRoutingKey: Product.*
+
+  application:
+    name: frame-dev
+sharding.jdbc:
+ data-sources:
+     ds_master:
+       driver-class-name: com.mysql.jdbc.Driver
+       url: jdbc:mysql://47.106.212.169:3306/frame-user?useUnicode=true&characterEncoding=utf-8&useSSL=false
+       username: root
+       password: root
+       max-active: 8
+       max-wait: 60000
+       initial-size: 1
+       min-idle: 1
+     ds_slave_0:
+       driver-class-name: com.mysql.jdbc.Driver
+       url: jdbc:mysql://47.106.212.169:3307/frame-user?useUnicode=true&characterEncoding=utf-8&useSSL=false
+       username: slave
+       password: slave
+ master-slave-rule:
+    name: ds_ms
+    master-data-source-name: ds_master
+    slave-data-source-names: ds_slave_0
+    load-balance-algorithm-type: round_robin
+
+
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.frame.dev.web.entity
+  global-config:
+    #refresh: true
+    db-config:
+      column-like : true
+      #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+      #id-type: 1
+      #驼峰下划线转换
+      db-column-underline: true
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      db-type: mysql
+      #sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    jdbc-type-for-null: null
+#日志配置文件
+logging:
+  config: classpath:logConfig/logback-dev.xml
+
+#xxl-job
+xxl-job:
+    adminAddress: http://47.106.212.169:8190/xxl-job-admin
+    #adminAddress: http://127.0.0.1:8190/xxl-job-admin
+    accessToken:
+    executor:
+      appname: ${spring.application.name}
+      port: 18110
+      ip:
+      logpath: /Users/lemonade/code/logs/
+      logretentiondays: -1
+
+
