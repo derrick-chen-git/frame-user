@@ -66,6 +66,11 @@
 			<artifactId>frame-xxl-job-spring-boot-starter</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.frame.starter</groupId>
+			<artifactId>frame-xxl-conf-spring-boot-starter</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

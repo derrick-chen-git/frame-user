@@ -4,6 +4,7 @@ import com.frame.common.base.ResponseData;
 import com.frame.dev.web.entity.User;
 import com.frame.dev.web.service.IUserService;
 import com.frame.starter.rabbitmq.sender.RabbitMqSender;
+import com.xxl.conf.core.annotation.XxlConf;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -28,11 +29,22 @@ import javax.validation.Valid;
 @RequestMapping("/user")
 @Slf4j
 public class UserController {
+    @XxlConf("framedev.app.name")
+    private String appName;
     @Autowired
     private RabbitMqSender rabbitMqSender;
     @Resource
     private IUserService userService;
 
+    @GetMapping(value = "/getAppName")
+    @ApiOperation(value = "查找appName配置")
+    @ResponseBody
+    public ResponseData getAppName(){
+        log.info("获取getAppName++++++++++++++"+appName);
+        ResponseData<String> res = ResponseData.success();
+        res.setData(appName);
+        return res;
+    }
     @GetMapping(value = "/getAllUsers")
     @ApiOperation(value = "查找所有用户")
     @ResponseBody
