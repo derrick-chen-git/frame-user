@@ -1,0 +1,30 @@
+#config配置中心
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://47.106.212.169:8761/eureka/
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: frame-user
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: frame-config
+      #label: master
+      #uri: http://47.106.212.169:8180/
+      #uri: http://127.0.0.1:8180/
+      profile: ${spring.profiles.active}
+
+xxl:
+  conf:
+    admin:
+      address: http://47.106.212.169:8160/xxl-conf-admin
+    env: ${spring.profiles.active}
+    access:
+      token:
+    mirrorfile: /Users/lemonade/code/logs/frame-user.web.properties
