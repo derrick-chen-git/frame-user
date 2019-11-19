@@ -23,7 +23,7 @@ public class GeneratorServiceEntity {
     public void generateCode() {
         String packageName = "com.frame.user.web";
         boolean serviceNameStartWithI = true;//user -> UserService, 设置成true: user -> IUserService
-        String[] tableNames = {"t_user_detail","t_user"};
+        String[] tableNames = {"t_user","t_user_detail","t_user_role","t_role","t_permission","t_role_permission"};
         generateByTables(serviceNameStartWithI, packageName, tableNames);
     }
 
@@ -46,7 +46,7 @@ public class GeneratorServiceEntity {
                 .setInclude(tableNames);//修改替换成你需要的表名，多个表名传数组
         config.setActiveRecord(false)
                 .setAuthor("derrick")
-                .setOutputDir("/Users/lemonade/code/frame/frame-user/user.web/src/main/java")
+                .setOutputDir("/Users/lemonade/code/frame/frame-user/user-web/")
                 .setBaseResultMap(true) // 基本的字段映射
                 .setBaseColumnList(true) // 基本的sql片段
                 .setFileOverride(true).setSwagger2(true);
@@ -56,11 +56,11 @@ public class GeneratorServiceEntity {
         }
        PackageConfig packageConfig =  new PackageConfig()
                 .setParent(packageName)
-                .setController("controller")
+                //.setController("controller")
                 .setEntity("entity")
                 .setMapper("mapper")
-                .setEntity("entity")
-               .setService("service");
+                .setEntity("entity");
+               //.setService("service");
         /*TemplateConfig tc = new TemplateConfig();
         tc.setController("/templates/controller.java.vm");
         tc.setService("/templates/service.java.vm");

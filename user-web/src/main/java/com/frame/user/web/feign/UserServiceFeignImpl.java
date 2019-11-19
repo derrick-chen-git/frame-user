@@ -1,3 +1,4 @@
+/*
 package com.frame.user.web.feign;
 
 import com.frame.common.base.ResponseData;
@@ -32,3 +33,4 @@ public class UserServiceFeignImpl implements IUserFeignService {
         return dtos;
     }
 }
+*/

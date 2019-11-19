@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frame.user.web.mapper.RoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.frame.user.web.entity.Role">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="remark" property="remark" />
+        <result column="is_delete" property="isDelete" />
+        <result column="created_at" property="createdAt" />
+        <result column="update_at" property="updateAt" />
+
+    </resultMap>
+    <resultMap id="RolePermissionMap" type="com.frame.user.web.entity.Role" extends="BaseResultMap">
+        <collection property="permissions"  ofType="com.frame.user.web.entity.Permission">
+            <id column="p_id" property="id" />
+            <result column="p_name" property="name" />
+            <result column="url" property="url" />
+            <result column="p_is_delete" property="isDelete" />
+            <result column="p_created_at" property="createdAt" />
+            <result column="p_update_at" property="updateAt" />
+        </collection>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, remark, is_delete, created_at, update_at
+    </sql>
+    <select id="selectRoleByUserId" resultMap="BaseResultMap">
+        select r.* from t_role r left JOIN t_user_role ur on r.id = ur.role_id where ur.user_id =  #{userId}
+        and ur.is_delete = 0
+        and r.is_delete = 0
+    </select>
+    <select id="selectRoleAndPermissionsByUserId" resultMap="RolePermissionMap">
+        select r.*,
+        p.id as p_id,
+        p.name as p_name,
+        p.url as url,
+        p.is_delete as p_is_delete,
+        p.created_at as p_created_at,
+        p.update_at as p_update_at
+        from t_role r
+        LEFT JOIN t_user_role ur on r.id = ur.role_id
+        LEFT JOIN t_role_permission rp ON  rp.role_id = r.id
+        LEFT JOIN t_permission p on rp.permission_id = p.id
+        where ur.user_id =  #{userId}
+        and ur.is_delete = 0
+        and r.is_delete = 0
+        and rp.is_delete = 0
+        and p.is_delete = 0
+    </select>
+</mapper>

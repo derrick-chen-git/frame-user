@@ -1,6 +1,6 @@
 package com.frame.user.web.mapper;
 
-import com.frame.user.web.entity.UserDetail;
+import com.frame.user.web.entity.RolePermission;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author derrick
  * @since 2019-03-01
  */
-public interface UserDetailMapper extends BaseMapper<UserDetail> {
+public interface RolePermissionMapper extends BaseMapper<RolePermission> {
 
 }

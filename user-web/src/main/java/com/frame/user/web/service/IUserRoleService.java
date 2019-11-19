@@ -1,6 +1,6 @@
 package com.frame.user.web.service;
 
-import com.frame.user.web.entity.UserDetail;
+import com.frame.user.web.entity.UserRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author derrick
- * @since 2018-12-28
+ * @since 2019-02-25
  */
-public interface IUserDetailService extends IService<UserDetail> {
+public interface IUserRoleService extends IService<UserRole> {
 
 }

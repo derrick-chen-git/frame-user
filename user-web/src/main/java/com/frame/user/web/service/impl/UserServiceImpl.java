@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.frame.common.base.ResponseData;
+import com.frame.common.enums.ResultCodeEnum;
 import com.frame.common.utils.LongIdGenerator;
 import com.frame.user.web.constant.RedisKey;
 import com.frame.user.web.constant.RedisLock;
@@ -13,13 +14,9 @@ import com.frame.user.web.mapper.UserMapper;
 import com.frame.user.web.service.IUserService;
 import com.frame.starter.redis.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -38,23 +35,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Autowired
     private RedisUtils redisUtils;
+    @Autowired
+    UserMapper userMapper;
 
 
     @Override
     public ResponseData<List<User>> getAllUsers() {
         log.info("获取所有用户++++++++++++++");
-        return new ResponseData(0,"success",this.list(new QueryWrapper<>()));
+        return new ResponseData(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMsg(),this.list(new QueryWrapper<>()));
     }
 
     @Override
     public ResponseData<User> getUserById(Long id) {
         String key = String.format(RedisKey.USER_KEY_ID,String.valueOf(id));
         if(redisUtils.exists(key)){
-            return new ResponseData<User>(0,"success",(User)redisUtils.get(key));
+            return new ResponseData<User>(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMsg(),(User)redisUtils.get(key));
         }else{
             User user = this.getById(id);
             redisUtils.set(key,user,300L);
-            return new ResponseData<User>(0,"success",user);
+            return new ResponseData<User>(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMsg(),user);
         }
     }
 
@@ -62,7 +61,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public ResponseData<IPage<User>> getUserPage(int pageNum, int pageSize) {
         Page<User> page = new Page<User>(pageNum,pageSize);
        IPage<User> ipage = this.page(page,new QueryWrapper<>());
-       return new ResponseData<IPage<User>>(0,"success",ipage);
+       return new ResponseData<IPage<User>>(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMsg(),ipage);
     }
 
     @Override
@@ -76,12 +75,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 //判断用户是否已存在
                 User oldUser = this.getOne(new QueryWrapper<User>().eq("name", user.getName()));
                 if (null != oldUser) {
-                    return new ResponseData<>(10001, "该用户已存在，请勿重复插入！");
+                    return new ResponseData("10001", "该用户已存在，请勿重复插入！");
                 }
                 Long id = LongIdGenerator.getLongId();
                 user.setId(id);
                 this.save(user);
-                return new ResponseData<>(0,"success");
+                return new ResponseData("0","success");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,5 +100,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         this.updateById(user);
         redisUtils.remove(key);
         return ResponseData.success();
+    }
+
+    @Override
+    public User getUserByName(String name) {
+        return userMapper.selectByName(name);
     }
 }

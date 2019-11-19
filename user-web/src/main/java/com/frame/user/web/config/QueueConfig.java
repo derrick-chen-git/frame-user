@@ -72,7 +72,7 @@ public class QueueConfig {
         MyQueue myQueue = MyQueue.builder().exchangeName("fanout_test_exchange")
                 .queueName("fanout_test_queue2").autoDelete(false).durable(true)
                 .exchangeType(ExchangeTypes.FANOUT).build();
-            return this.rabbitMqUtils.init(myQueue);
+        return this.rabbitMqUtils.init(myQueue);
     }
     @Bean
     public SimpleMessageListenerContainer TopicQueue1ListenerContainer(TopicQueue1Listener topicQueue1Listener) {

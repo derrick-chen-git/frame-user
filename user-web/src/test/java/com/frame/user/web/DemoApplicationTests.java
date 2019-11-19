@@ -2,12 +2,15 @@ package com.frame.user.web;
 
 import com.frame.starter.rabbitmq.sender.RabbitMqSender;
 
+import com.frame.user.web.entity.Role;
+import com.frame.user.web.mapper.RoleMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
 import java.util.UUID;
 
 @RunWith(SpringRunner.class)
@@ -16,6 +19,8 @@ import java.util.UUID;
 public class DemoApplicationTests {
 	@Autowired
 	RabbitMqSender rabbitSender;
+	@Autowired
+	RoleMapper roleMapper;
 /*	@Autowired
 	private RabbitMqUtils rabbitMqUtils;*/
 	//@Autowired
@@ -54,4 +59,10 @@ public class DemoApplicationTests {
 		rabbitSender.sendTransMessage("topic_test_exchange","key1","++++测ggjj试topickey1+++",false);
 	}
 
+
+	@Test
+	public void testMapper(){
+		List<Role> roles = roleMapper.selectRoleAndPermissionsByUserId(528202797766672384L);
+		System.out.println(roles);
+	}
 }

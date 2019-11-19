@@ -1,6 +1,7 @@
 package com.frame.user.web.controller;
 
 import com.frame.common.base.ResponseData;
+import com.frame.common.enums.ResultCodeEnum;
 import com.frame.user.web.entity.User;
 import com.frame.user.web.service.IUserService;
 import com.frame.starter.rabbitmq.sender.RabbitMqSender;
@@ -24,7 +25,7 @@ import javax.validation.Valid;
  * @author derrick.chen
  * @since 2018-10-12
  */
-@Controller
+@RestController
 @Api(value = "用户相关控制器")
 @RequestMapping("/user")
 @Slf4j
@@ -62,13 +63,13 @@ public class UserController {
     @ApiOperation(value = "新增用户")
     @ResponseBody
     public ResponseData insertUsers(@Valid @RequestBody User user){
-        return new ResponseData(0,"SUCCESS",userService.insertUser(user));
+        return new ResponseData(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMsg(),userService.insertUser(user));
     }
     @DeleteMapping(value = "/deleteUsers")
     @ApiOperation(value = "删除用户")
     @ResponseBody
     public ResponseData deleteUsersUsers(Long id){
-        return new ResponseData(0,"SUCCESS",userService.removeById(id));
+        return new ResponseData(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMsg(),userService.removeById(id));
     }
     @GetMapping(value = "/getUserPage")
     @ApiOperation(value = "分页查询用户")

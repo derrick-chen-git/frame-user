@@ -43,4 +43,6 @@ public interface IUserService extends IService<User> {
      * @return
      */
     ResponseData updateUser(User user);
+
+    User getUserByName(String name);
 }
